@@ -84,7 +84,7 @@ const facts = [
   ...(done && best && cheap
     ? [
         `${esc(done.manifest.title)}: <b>${count.format(done.results!.leafCount)}</b> answers graded`,
-        `most right: <b>${best.correct}/${best.total}</b> ${modelName(best.model)}`,
+        `most right on the same budget: <b>${best.correct}/${best.total}</b> ${modelName(best.model)}`,
         `cheapest right answer: <b>${usd(cheap.costPerCorrectNanoUsd ?? 0)}</b> ${modelName(cheap.model)}`,
         `results root <b>${short(done.results!.resultsRoot)}</b>`,
       ]

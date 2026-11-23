@@ -7,12 +7,29 @@ const here = import.meta.dirname;
 // The exam folders of this repository, or another set of them for a preview (IGNOT_EXAMS=/some/folder).
 const examsDir = resolve(process.env.IGNOT_EXAMS ?? resolve(here, "../exams"));
 
+// The token's address, from the one line that sets it (src/nav.ts), so the pages name it without a script.
+function tokenAddress(): string {
+  const ca = readFileSync(resolve(here, "src/nav.ts"), "utf8").match(/^const CA = "(0x[0-9a-fA-F]{40}|)";/m)?.[1];
+  if (ca === undefined) throw new Error('src/nav.ts must set CA to the token\'s address (0x and 40 hex digits) or to ""');
+  return ca;
+}
+
 // Every page shares one header and one footer: <!--part:name--> becomes parts/name.html when a page is served or built.
+// Then the token: until its address is set, <!--token-->...<!--/token--> is dropped and <!--no-token-->...<!--/no-token-->
+// is kept, so the pages say what they said before it; once it is set, the reverse, and <!--ca--> becomes the address.
 const parts: Plugin = {
   name: "parts",
   transformIndexHtml: {
     order: "pre",
-    handler: (html) => html.replace(/<!--part:([a-z-]+)-->/g, (_, name: string) => readFileSync(resolve(here, "parts", `${name}.html`), "utf8")),
+    handler: (html) => {
+      const ca = tokenAddress();
+      const page = html
+        .replace(/<!--part:([a-z-]+)-->/g, (_, name: string) => readFileSync(resolve(here, "parts", `${name}.html`), "utf8"))
+        .replace(/<!--(no-token|token)-->([\s\S]*?)<!--\/\1-->/g, (_, when: string, body: string) => ((when === "token") === (ca !== "") ? body : ""))
+        .replaceAll("<!--ca-->", ca);
+      if (/<!--\/?(no-)?token-->/.test(page)) throw new Error("a <!--token--> or <!--no-token--> marker has no end");
+      return page;
+    },
   },
 };
 
@@ -199,11 +216,14 @@ const published: Plugin = {
 // scripts, the engine's WebAssembly and the inline scripts of the built pages (by their hashes, taken from the built
 // files), and may talk only to this site, drand's relays and the record chain's node, both read from the engine's
 // source so they cannot drift apart. The exam folders and their index are public data that scripts elsewhere may read.
+let out = ""; // where the build writes, --outDir included
 const headers: Plugin = {
   name: "headers",
   apply: "build",
+  configResolved(config) {
+    out = resolve(config.root, config.build.outDir);
+  },
   closeBundle() {
-    const out = resolve(here, "dist");
     const inline = readdirSync(out)
       .filter((name) => name.endsWith(".html"))
       .flatMap((name) => [...readFileSync(join(out, name), "utf8").matchAll(/<script(?![^>]*\bsrc=)[^>]*>([\s\S]*?)<\/script>/g)].map((m) => m[1]!))

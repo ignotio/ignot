@@ -195,7 +195,7 @@ seconds so one frame can be looked at. Neither exists in a build.
   the round has opened. It holds no funds and cannot be upgraded.
 - [`StumpBox.sol`](contracts/src/StumpBox.sol): anyone can add a question to an upcoming exam by burning a fixed
   amount of a token. The question arrives already sealed by its author. The burn goes straight from the sender to
-  the dead address; the contract never holds tokens.
+  the dead address; the contract never holds tokens. Not deployed yet.
 
 ## Limits
 

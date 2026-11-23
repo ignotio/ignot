@@ -44,7 +44,7 @@
       <h1><span>The exam no model has seen.</span></h1>
       <p class="mirror" aria-hidden="true"><span>The exam no model has seen.</span></p>
       <div class="floor">
-        <p class="lede">Every week one exam is locked to a public clock. When it opens, every model sits it at once, and anyone can grade the answers again.</p>
+        <p class="lede">Every week one exam is locked to a public clock. When it opens, every model on the panel sits it, and anyone can grade the answers again.</p>
         <div class="check">
           <button class="button" type="button" id="check">Check the seal</button>
           <p class="check-result" aria-live="polite"></p>
@@ -84,7 +84,7 @@
   <div class="wrap kinds" id="kinds" hidden>
     <div>
       <h3>Ten kinds of question, five levels each.</h3>
-      <p class="lead"><span id="kinds-from"></span> has been opened, so here is what was on it. The next paper holds the same ten kinds, and nobody has seen which questions.</p>
+      <p class="lead"><span id="kinds-from"></span> has been opened, so here is what was on it. The next paper holds the same ten kinds, and no model has seen which questions.</p>
       <div class="kind-list" id="kind-list" role="group" aria-label="Kinds of question"></div>
     </div>
     <div class="slip" id="slip" aria-live="polite"></div>
@@ -116,7 +116,7 @@
       <li>
         <p class="fact" id="fact-opened"></p>
         <h3>Opened by the round</h3>
-        <p>When the round arrives, its signature is the key. Everyone can decrypt at the same second. Nobody can before, and that includes us.</p>
+        <p>When the round arrives, its signature is the key. Everyone can decrypt at the same second. Nobody can before, and nobody can change it after, us included.</p>
       </li>
       <li>
         <p class="fact" id="fact-graded"></p>
@@ -203,7 +203,7 @@
   <img class="night-hall" src="/hall.webp" alt="" width="2016" height="672" loading="lazy" decoding="async">
   <div class="wrap">
     <h2>Exam Night</h2>
-    <p class="lead">Once a week the seal breaks in public. Every model sits the same paper, and every answer is published with its price.</p>
+    <p class="lead">Once a week the seal breaks in public. Every model on the panel sits the same paper, and every answer is published with its price.</p>
     <p class="night-next rises" id="night-next" style="--i:2"></p>
   </div>
 </section>
@@ -213,7 +213,8 @@
     <div>
       <h2>Think you can stump them?</h2>
       <p class="lead">Burn a fixed amount of the token to put one question of your own into the next exam. It is sealed like ours: nobody reads it before the round, and the models meet it cold.</p>
-      <p class="rises" style="--i:2"><span class="state">Opens with the token.</span></p>
+      <p class="rises" style="--i:2"><span class="state"><!--no-token-->Opens with the token.<!--/no-token--><!--token-->Opens soon.<!--/token--></span></p><!--token-->
+      <div class="ca rises" style="--i:3"><span>$IGNOT on Robinhood Chain</span> <span class="ca-address"><!--ca--></span> <span class="ca-do"><button class="button" type="button" aria-label="Copy the address">Copy</button> <a data-link="token">Explorer</a> <span aria-live="polite"></span></span></div><!--/token-->
     </div>
     <div class="stump-side">
       <div class="stump-slip rises" style="--i:2" aria-hidden="true">
@@ -239,7 +240,7 @@
     <div class="asks rises" style="--i:2">
       <details>
         <summary>Can anyone read the exam before it opens?</summary>
-        <p>No. The paper is encrypted to a drand round that has not happened yet. The key is that round's signature, and it does not exist until the League of Entropy's nodes produce it together. That includes us.</p>
+        <p>Not the models, and nobody from the sealed file: it is encrypted to a drand round that has not happened yet, and its key is that round's signature, which does not exist until the League of Entropy's nodes produce it together. We make each paper from a fresh random seed and seal it at once, and the hashes published with the seal prove it never changed.</p>
       </details>
       <details>
         <summary>What stops you from swapping the paper afterwards?</summary>
@@ -251,7 +252,7 @@
       </details>
       <details>
         <summary>Why can a famous model score zero?</summary>
-        <p>On the same-budget track every model gets the same money for each question. A model that thinks at length can spend all of it before it answers, and an answer that cost more does not count. The other track has no budget.</p>
+        <p>On the same-budget track every model gets the same money for each question. A model that thinks at length can spend all of it before it answers, and an answer that cost more does not count. When the budget cannot even buy the prompt and a useful reply at a model's listed price, the question is not sent, and its record says so. The other track has no budget.</p>
       </details>
       <details>
         <summary>Can the questions leak into training data?</summary>
@@ -259,7 +260,7 @@
       </details>
       <details>
         <summary>What is the token for?</summary>
-        <p>One thing: Stump. Burn a fixed amount to put a question of your own into the next exam, sealed like ours. It opens with the token.</p>
+        <p>One thing: Stump. Burn a fixed amount to put a question of your own into the next exam, sealed like ours. It opens <!--no-token-->with the token<!--/no-token--><!--token-->soon<!--/token-->.</p>
       </details>
     </div>
   </div>
