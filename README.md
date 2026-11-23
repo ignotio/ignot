@@ -188,6 +188,12 @@ On the development server two query parameters help when working on the first sc
 `?at=2026-11-24T13:59:50Z` shows the page at another moment, and `?open=1.4` holds the opening at that many
 seconds so one frame can be looked at. Neither exists in a build.
 
+## Token
+
+$IGNOT runs on Robinhood Chain (chain id 4663) at `0x6CB26c30326A4598489B34e4D2550d6455f16630`
+([explorer](https://robinhoodchain.blockscout.com/token/0x6CB26c30326A4598489B34e4D2550d6455f16630)). Its one use will be Stump: StumpBox, below,
+is written and tested, and is not deployed yet.
+
 ## Contracts
 
 - [`ExamSeals.sol`](contracts/src/ExamSeals.sol): the sealer records an exam's hashes and drand round, which is

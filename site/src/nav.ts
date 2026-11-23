@@ -5,7 +5,7 @@ import "./sections.css";
 // The token's contract address on Robinhood Chain: 0x and 40 hex digits, or nothing until the token exists. This line
 // is the one place it is set. The build reads it from here (vite.config.ts) and writes it into every page; while it
 // is empty the pages say what they said before the token.
-const CA = "";
+const CA = "0x6CB26c30326A4598489B34e4D2550d6455f16630";
 
 const LINKS: Record<string, string> = {
   repo: "https://github.com/ignotio/ignot",
