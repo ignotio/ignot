@@ -2,7 +2,7 @@
 import "./style.css";
 import "./sections.css";
 
-const LINKS: Record<string, string> = { repo: "https://github.com/ignotexam/ignot", x: "https://x.com/ignotexam" }; // a link is shown once it exists
+const LINKS: Record<string, string> = { repo: "https://github.com/ignotio/ignot", x: "https://x.com/ignotexam" }; // a link is shown once it exists
 
 const header = document.querySelector<HTMLElement>(".nav")!;
 const menu = header.querySelector<HTMLButtonElement>(".menu")!;

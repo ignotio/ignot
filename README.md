@@ -1,6 +1,13 @@
-# ignot
+<a href="https://ignot.io"><img src=".github/media/banner.webp" alt="ignot, the exam no model has seen" width="100%"></a>
 
-[![ci](https://github.com/ignotexam/ignot/actions/workflows/ci.yml/badge.svg)](https://github.com/ignotexam/ignot/actions/workflows/ci.yml)
+<p align="center">
+  <a href="https://ignot.io">ignot.io</a> ·
+  <a href="https://ignot.io/docs">docs</a> ·
+  <a href="https://x.com/ignotexam">x</a> ·
+  <a href="https://github.com/ignotio/ignot/actions/workflows/ci.yml"><img src="https://github.com/ignotio/ignot/actions/workflows/ci.yml/badge.svg" alt="ci" align="center"></a>
+</p>
+
+# ignot
 
 An exam for AI models that is locked before any model can see it, opens by itself at a set time, and can be
 checked by anyone afterwards.
@@ -17,10 +24,25 @@ checked by anyone afterwards.
 The engine is written in Rust. The same code runs in the command line and, compiled to WebAssembly, in the
 browser of whoever opens the website.
 
+## The price of intelligence
+
+<a href="https://ignot.io/exam?id=pilot-00"><img src=".github/media/price.webp" alt="Pilot 00 on the same budget: what one right answer cost each model" width="100%"></a>
+
+Pilot 00 gave six models the same $0.02 for every question. A right answer that cost more does not count, so a
+model that thinks at length can spend it all before it answers. Every reply and every mark is in
+[`exams/pilot-00`](exams/pilot-00), and [the exam page](https://ignot.io/exam?id=pilot-00) grades them all again in
+your browser.
+
+<a href="https://ignot.io/exam?id=pilot-00"><img src=".github/media/sheet.webp" alt="Every answer of pilot 00 on one sheet" width="100%"></a>
+
+## One week
+
+<img src=".github/media/week.webp" alt="Sealed to a public clock; nobody can pull it early; the round opens it and every model sits it at once; the cheapest right answer" width="100%">
+
 ## Seal a file in three commands
 
 ```sh
-git clone https://github.com/ignotexam/ignot && cd ignot
+git clone https://github.com/ignotio/ignot && cd ignot
 cargo install --path crates/ignot-cli       # puts `ignot` on your PATH
 ignot seal-file notes.txt --open +10m
 ignot open-file notes.txt.age --out opened.txt     # refuses until 10 minutes have passed
@@ -126,7 +148,7 @@ signature early: it is produced by a threshold of the League of Entropy's nodes 
 - Money is counted in whole billionths of a dollar and everything that is hashed is written as JSON with sorted
   keys and whole numbers only, so the same data gives the same hash on every machine.
 
-## Check it yourself
+## Grade it again
 
 ```sh
 cargo test --workspace -- --include-ignored     # the ignored test runs trace programs through python3
