@@ -16,7 +16,8 @@ function tokenAddress(): string {
 
 // Every page shares one header and one footer: <!--part:name--> becomes parts/name.html when a page is served or built.
 // Then the token: until its address is set, <!--token-->...<!--/token--> is dropped and <!--no-token-->...<!--/no-token-->
-// is kept, so the pages say what they said before it; once it is set, the reverse, and <!--ca--> becomes the address.
+// is kept, so the pages say what they said before it; once it is set, the reverse, <!--ca--> becomes the address and
+// <!--ca-end--> its last four digits (a phone shows the address cut in the middle: its start, then these).
 const parts: Plugin = {
   name: "parts",
   transformIndexHtml: {
@@ -26,7 +27,8 @@ const parts: Plugin = {
       const page = html
         .replace(/<!--part:([a-z-]+)-->/g, (_, name: string) => readFileSync(resolve(here, "parts", `${name}.html`), "utf8"))
         .replace(/<!--(no-token|token)-->([\s\S]*?)<!--\/\1-->/g, (_, when: string, body: string) => ((when === "token") === (ca !== "") ? body : ""))
-        .replaceAll("<!--ca-->", ca);
+        .replaceAll("<!--ca-->", ca)
+        .replaceAll("<!--ca-end-->", ca.slice(-4));
       if (/<!--\/?(no-)?token-->/.test(page)) throw new Error("a <!--token--> or <!--no-token--> marker has no end");
       return page;
     },

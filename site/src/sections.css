@@ -13,6 +13,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--nav-h) + 16px); /* whatever a link or a key scrolls to lands a little under the fixed header */
 }
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -20,7 +21,7 @@ html {
   }
 }
 section[id] {
-  scroll-margin-top: 56px;
+  scroll-margin-top: -24px; /* but a section's own edge tucks under the header: its padding is the room */
 }
 section:not(.hero) {
   position: relative;
@@ -1111,7 +1112,7 @@ code {
 @media (min-width: 861px) {
   .proof .two > div:first-child {
     position: sticky;
-    top: 120px;
+    top: calc(var(--nav-h) + 56px);
   }
 }
 .proof .proof-links {
@@ -1214,11 +1215,116 @@ code {
 .stump .ca > :first-child {
   color: var(--ink-2);
 }
+/* The same, on one line over the header of every page: dark glass over the sky and over the black glass alike. On a
+   phone the address is cut in the middle, yet the whole of it is still what is read aloud and what a long press
+   selects; the four digits after the cut are only drawn. "Copied" shows in the button's place. */
+:root:has(.ca-bar) {
+  --bar: 32px;
+}
+.ca-bar {
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--bar);
+  padding: 0 var(--gutter);
+  align-content: center; /* its one line, centred: .ca is a wrapping box */
+  align-items: baseline;
+  gap: 0 12px;
+  font: 400 13px/1 var(--sans);
+  white-space: nowrap;
+  background: rgb(1 16 23 / 0.5);
+  border-bottom: 1px solid var(--rule-glass);
+}
+.ca-bar > :first-child {
+  flex: 1 1 0; /* the name takes the room the address leaves, so the line never wraps; a tiny screen cuts the name */
+  min-width: 0;
+  overflow: hidden;
+  line-height: 1.5;
+  text-overflow: ellipsis;
+}
+.ca-bar b {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--copper);
+}
+.ca-bar b::before {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 8px;
+  content: "";
+  background: var(--sphere);
+  border-radius: 50%;
+}
+.ca-bar .ca-address,
+.ca-end {
+  font: 400 13px/1 var(--mono);
+  color: var(--paper);
+}
+.ca-end {
+  display: none;
+  margin-left: -12px; /* no gap: it is the rest of the address */
+  user-select: none;
+}
+.ca-bar .ca-do {
+  position: relative;
+}
+.ca-bar .button {
+  padding: 5px 12px;
+  font-size: 12.5px;
+  color: var(--paper);
+  box-shadow: inset 0 0 0 1px rgb(244 252 251 / 0.4);
+}
+.ca-bar .button::before {
+  position: absolute;
+  inset: -5px -6px;
+  content: ""; /* a finger reaches it anywhere across the bar's height */
+}
+.ca-bar .button::after {
+  height: 2px;
+}
+.ca-bar [aria-live] {
+  position: absolute;
+  inset: 0 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 100%;
+  font: 600 12.5px/1 var(--sans);
+  color: var(--copper);
+  pointer-events: none;
+}
+.ca-bar [aria-live]:not(:empty) {
+  padding: 0 8px;
+  background: var(--ink);
+}
+.ca-bar a {
+  font-weight: 500;
+  text-underline-offset: 3px;
+}
+.ca-bar :focus-visible {
+  outline-offset: 2px; /* the ring stays inside the bar */
+}
+@media (max-width: 760px) {
+  .ca-on,
+  .ca-bar a {
+    display: none;
+  }
+}
+@media (max-width: 560px) {
+  .ca-bar .ca-address {
+    width: calc(7ch + 0.5px); /* 0x and four digits, then the cut */
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ca-end {
+    display: block;
+  }
+}
 
 /* ---- Pages that are not the home page: paper under a glass header */
 .page {
   min-height: 100svh;
-  padding: clamp(112px, 17vh, 170px) 0 clamp(72px, 11vh, 130px);
+  padding: calc(clamp(112px, 17vh, 170px) + var(--bar)) 0 clamp(72px, 11vh, 130px);
   color: var(--ink);
   background: var(--paper-ground);
 }
@@ -1315,7 +1421,6 @@ code {
   border-bottom: 1px solid var(--rule-paper);
 }
 .questions > li {
-  scroll-margin-top: 80px; /* a link to one question lands under the header, not behind it */
   border-top: 1px solid var(--rule-paper);
 }
 .questions summary {
@@ -1400,7 +1505,7 @@ code {
 }
 .toc {
   position: sticky;
-  top: 112px;
+  top: calc(var(--nav-h) + 48px);
   align-self: start;
   display: grid;
   margin-top: 12px;

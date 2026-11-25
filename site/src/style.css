@@ -19,6 +19,8 @@
   --sans: "Jost", "Futura", "Century Gothic", system-ui, sans-serif;
   --mono: "Sometype Mono", ui-monospace, "SF Mono", Menlo, monospace;
   --gutter: clamp(20px, 5vw, 72px);
+  --bar: 0px; /* the token's address over the header, once the token exists (sections.css, .ca-bar) */
+  --nav-h: calc(64px + var(--bar)); /* the fixed header: what scrolls under it starts below this */
   --out: cubic-bezier(0.16, 1, 0.3, 1); /* arrivals */
   --in-out: cubic-bezier(0.77, 0, 0.175, 1); /* things that travel across the screen */
   color-scheme: dark;
@@ -118,8 +120,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 64px; /* the same in every state, so the header can stand still while pages change under it */
-  padding: 0 var(--gutter);
+  height: var(--nav-h); /* the same in every state, so the header can stand still while pages change under it */
+  padding: var(--bar) var(--gutter) 0;
   transition: background-color 0.25s;
 }
 .nav.solid,
@@ -691,7 +693,7 @@ body {
     min-height: max(860px, 100svh);
   }
   .hero h1 {
-    top: 78px;
+    top: calc(var(--nav-h) + 14px);
     right: var(--gutter);
     bottom: auto;
     width: auto;
