@@ -266,5 +266,5 @@ const headers: Plugin = {
 export default defineConfig({
   plugins: [parts, published, headers],
   define: { __EXAMS__: index(), __SHEET__: sheet() }, // the same index, for the pages themselves, and the answer sheet
-  build: { rollupOptions: { input: ["index.html", "exam.html", "docs.html", "404.html"].map((page) => resolve(here, page)) } },
+  build: { rollupOptions: { input: ["index.html", "exam.html", "docs.html", "price.html", "404.html"].map((page) => resolve(here, page)) } },
 });

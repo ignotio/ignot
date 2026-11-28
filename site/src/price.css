@@ -1,0 +1,273 @@
+/* The price page (price.html). The switch, the table, the line under it and the sphere are the boards' own
+   (sections.css); here are the same prices drawn on black glass, and what the table needs beyond the boards': a
+   column for each exam, a price over its right answers, and each model's name as its row's header. */
+
+.means {
+  max-width: 66em; /* one line on a wide screen */
+  margin-top: 14px;
+  font: 400 13.5px/1.6 var(--mono);
+  color: var(--soft-paper);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .page .means {
+    animation: rise 0.7s 0.24s var(--out) both; /* after the title and the line under it */
+  }
+}
+
+/* ---- Drawn: each model a row, each exam a copper line from $0 to its price on one scale for the whole page, the
+   sphere where the cheapest line of that exam ends. An earlier exam's line is the same copper, quieter. On black
+   glass, like the public clock. --n is the number of steps on the scale (price.ts). */
+.pchart {
+  --label: 70px; /* the exam's name, before its line */
+  --room: 70px; /* after the longest line, its price */
+  --plot: calc(100% - var(--label) - var(--room));
+  margin-top: 26px;
+  padding: clamp(18px, 2.4vw, 34px) clamp(18px, 2.8vw, 40px) clamp(12px, 1.6vw, 22px);
+  color: var(--paper);
+  background: linear-gradient(#0a3f45 0, #011a20 72px, var(--glass) 240px);
+  border-top: 1px solid #2c7f86;
+}
+.pchart:empty {
+  display: none;
+}
+.pkey {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 22px;
+  margin-bottom: 18px;
+  font: 400 12px/1.5 var(--mono);
+  color: var(--soft-glass);
+}
+.prow {
+  display: grid;
+  grid-template-columns: minmax(0, 12rem) minmax(0, 1fr);
+  gap: 4px clamp(16px, 2.4vw, 32px);
+  align-items: center;
+  padding: 10px 0;
+  border-top: 1px solid var(--rule-glass);
+}
+.prow.pscale {
+  padding: 0 0 8px;
+  border: 0;
+}
+.pname {
+  font: 600 1.02rem/1.25 var(--sans);
+}
+.pticks {
+  position: relative;
+  height: 12px;
+  font: 400 12px/1 var(--mono);
+  color: var(--soft-glass);
+}
+.pticks span {
+  position: absolute;
+  bottom: 0;
+  left: calc(var(--label) + var(--x) * var(--plot));
+  translate: -50% 0;
+  white-space: nowrap;
+}
+.pbar {
+  --from: calc(var(--label) + var(--x) * var(--plot) + 14px); /* where its price starts */
+  --w: 7ch; /* "$0.0046" */
+  position: relative;
+  height: 24px;
+  font: 400 12px/24px var(--mono);
+  font-feature-settings: "tnum";
+  white-space: nowrap;
+}
+.pbar.none {
+  --from: calc(var(--label) + 8px); /* clear of the $0 line */
+  --w: 11ch; /* "did not sit" */
+}
+/* a faint line down from each step of the scale, drawn row by row so that it stops 4px short of a price on either
+   side instead of running through it (the glass under it is a gradient at the top, so a patch would show) */
+.pbar::before {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: repeating-linear-gradient(90deg, var(--rule-glass) 0 1px, transparent 1px calc((100% - 1px) / var(--n))) var(--label) 0 / calc(var(--plot) + 1px) 100% no-repeat;
+  mask: linear-gradient(90deg, #000 calc(var(--from) - 4px), transparent 0 calc(var(--from) + var(--w) + 4px), #000 0);
+}
+.pbar span {
+  color: var(--soft-glass);
+}
+.pbar i {
+  position: absolute;
+  top: 11px;
+  left: var(--label);
+  width: calc(var(--x) * var(--plot));
+  height: 2px;
+  background: var(--copper);
+}
+.pbar.was i {
+  background: rgb(226 146 95 / 0.6); /* 3.4:1 on the glass */
+}
+.pbar i::after {
+  position: absolute;
+  top: -5px;
+  right: -1px;
+  width: 2px;
+  height: 12px;
+  content: "";
+  background: var(--paper);
+}
+.pbar.best i::after {
+  top: -7px;
+  right: -8px;
+  width: 16px;
+  height: 16px;
+  background: var(--sphere);
+  border-radius: 50%;
+}
+.pbar em {
+  position: absolute;
+  top: 0;
+  left: var(--from);
+  font-style: normal;
+  color: var(--paper);
+}
+.pbar.none em {
+  color: var(--soft-glass);
+}
+
+/* ---- The table. With more exams than fit, it scrolls sideways under the names, never the page (price.ts opens it at
+   the newest exam). */
+.prices .table {
+  overflow-x: auto;
+}
+.prices thead th {
+  vertical-align: bottom;
+}
+.prices th span {
+  display: block;
+  margin-top: 3px;
+}
+.prices thead th:first-child,
+.prices tbody th {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  background: var(--paper-ground);
+}
+.prices tbody th {
+  min-width: 8em;
+  padding: 17px 16px 19px 0;
+  font: inherit;
+  letter-spacing: normal;
+  color: inherit;
+  text-transform: none;
+  vertical-align: baseline;
+  border-top: 1px solid var(--rule-paper);
+}
+.prices tbody tr:last-child th {
+  border-bottom: 1px solid var(--rule-paper);
+}
+.prices tbody th b {
+  margin-right: -0.3em; /* the space after the name, there to be read aloud, takes no room: the gap stays the boards' 12px */
+  font-weight: 600;
+}
+.prices tbody th span {
+  display: inline;
+  margin: 0 0 0 12px;
+  font: 400 0.92rem/1 var(--sans);
+  color: var(--soft-paper);
+}
+.prices td small {
+  display: block;
+  margin-top: 6px;
+  font: 400 12px/1.3 var(--mono);
+  color: #4a7270; /* 4.9:1 on paper, 4.6:1 on a hovered row, as the boards' */
+}
+.prices td.gone {
+  font-weight: 400;
+  color: #4a7270;
+}
+@media (hover: hover) and (pointer: fine) {
+  .prices tbody tr:hover th {
+    background: #e3f3f0;
+  }
+}
+/* what has slid under the names fades out at their edge instead of being cut through; nothing shows until it has */
+@supports (animation-timeline: scroll()) {
+  .prices thead th:first-child::after,
+  .prices tbody th::after {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    width: 24px;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(90deg, var(--paper-ground) 60%, rgb(238 248 246 / 0));
+    opacity: 0;
+    animation: under-names linear both;
+    animation-timeline: scroll(nearest inline);
+    animation-range: 0 64px; /* a sliver under the names barely fades; a whole exam does */
+  }
+}
+@keyframes under-names {
+  to {
+    opacity: 1;
+  }
+}
+/* the pressed button's ring in its own paper colour would vanish on the paper page */
+.prices .tracks button:focus-visible {
+  outline-color: var(--ink);
+}
+/* for a screen reader only: which price carries the sphere */
+.vh {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* The rows and the pressed track are named for a view transition only while the track changes (html.swap): named
+   on arrival, they sit in the first screen and would be drawn over the page before the slit opens. */
+html.swap .prices :is(tbody tr, .prow) {
+  view-transition-name: var(--vt, none);
+}
+.prices .tracks button[aria-pressed="true"] {
+  view-transition-name: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  html.swap .prices .tracks button[aria-pressed="true"] {
+    view-transition-name: track;
+  }
+}
+@media (max-width: 860px) {
+  .prow {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .pscale > span {
+    display: none;
+  }
+  .prices :is(th, td):nth-child(4) {
+    display: table-cell; /* the boards drop their fourth column on a phone; here it is an exam, or the change */
+  }
+  .prices tbody th span {
+    display: block;
+    margin: 6px 0 0;
+  }
+}
+/* a phone: two exams and the change fit beside the names at 390 px */
+@media (max-width: 560px) {
+  .prices table {
+    font-size: 15px;
+  }
+  .prices :is(th, td).num {
+    padding-left: 10px;
+  }
+  .prices tbody th {
+    min-width: 5.5em;
+    padding-right: 10px;
+  }
+  .prices td small {
+    font-size: 11px;
+  }
+  .prices td.per.best::before {
+    margin-right: 6px;
+  }
+}

@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Prices - ignot</title>
+<meta name="description" content="What one right answer costs each model, exam by exam: what its replies cost on a track, divided by its right answers there.">
+<meta property="og:title" content="Prices - ignot">
+<meta property="og:description" content="What one right answer costs each model, exam by exam: what its replies cost on a track, divided by its right answers there.">
+<!--part:head-->
+<script type="module" src="/src/price.ts"></script>
+</head>
+<body>
+<!--part:nav-->
+<main class="page prices">
+  <div class="wrap">
+    <div class="board-head">
+      <div>
+        <h1>The price of intelligence</h1>
+        <p class="lead">What one right answer costs each model, exam by exam.</p>
+        <p class="means">Each price is the money a model's replies cost on one track, divided by its right answers on that track.</p>
+      </div>
+      <div class="tracks" role="group" aria-label="Track">
+        <button type="button" data-track="same-budget" aria-pressed="true">Same budget</button>
+        <button type="button" data-track="unlimited" aria-pressed="false">No limit</button>
+      </div>
+    </div>
+    <p class="track-note" id="track-note"></p>
+    <div class="pchart" id="chart" aria-hidden="true"></div>
+    <div class="table" id="table"></div>
+    <p class="board-foot" id="foot"></p>
+  </div>
+</main>
+<!--part:footer-->
+</body>
+</html>
